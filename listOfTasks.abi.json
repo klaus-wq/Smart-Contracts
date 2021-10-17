@@ -1,7 +1,7 @@
 {
 	"ABI version": 2,
 	"version": "2.1",
-	"header": ["time", "expire"],
+	"header": ["pubkey", "time", "expire"],
 	"functions": [
 		{
 			"name": "constructor",
@@ -82,6 +82,14 @@
 			]
 		},
 		{
+			"name": "timestamp1",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"timestamp1","type":"uint32"}
+			]
+		},
+		{
 			"name": "tasks",
 			"inputs": [
 			],
@@ -98,6 +106,7 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
+		{"name":"timestamp1","type":"uint32"},
 		{"name":"keys","type":"uint8[]"},
 		{"components":[{"name":"title","type":"string"},{"name":"timestamp","type":"uint32"},{"name":"isDone","type":"bool"}],"name":"tasks","type":"map(uint8,tuple)"}
 	]
