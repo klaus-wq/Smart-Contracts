@@ -1,0 +1,73 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["time", "expire"],
+	"functions": [
+		{
+			"name": "createToken",
+			"inputs": [
+				{"name":"title","type":"string"},
+				{"name":"firstNameOfAuthor","type":"string"},
+				{"name":"LastNameOfAuthor","type":"string"},
+				{"name":"year","type":"uint256"},
+				{"name":"language","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getTokenInfo",
+			"inputs": [
+				{"name":"tokenId","type":"uint256"}
+			],
+			"outputs": [
+				{"components":[{"name":"title","type":"string"},{"name":"firstNameOfAuthor","type":"string"},{"name":"LastNameOfAuthor","type":"string"},{"name":"year","type":"uint256"},{"name":"language","type":"string"}],"name":"value0","type":"tuple"}
+			]
+		},
+		{
+			"name": "getTokenOwner",
+			"inputs": [
+				{"name":"tokenId","type":"uint256"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint256"}
+			]
+		},
+		{
+			"name": "sendToTheShop",
+			"inputs": [
+				{"name":"tokenId","type":"uint256"},
+				{"name":"price","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "showShop",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"map(uint256,uint256)"}
+			]
+		},
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"components":[{"name":"title","type":"string"},{"name":"firstNameOfAuthor","type":"string"},{"name":"LastNameOfAuthor","type":"string"},{"name":"year","type":"uint256"},{"name":"language","type":"string"}],"name":"booksArr","type":"tuple[]"},
+		{"name":"bookToOwner","type":"map(uint256,uint256)"},
+		{"name":"shop","type":"map(uint256,uint256)"}
+	]
+}
