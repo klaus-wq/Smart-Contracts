@@ -1,0 +1,60 @@
+{
+	"ABI version": 2,
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"pubkey","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getSummary",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"countPaid","type":"uint32"},{"name":"countUnpaid","type":"uint32"},{"name":"totalCount","type":"uint32"}],"name":"sum","type":"tuple"}
+			]
+		},
+		{
+			"name": "addBuyToList",
+			"inputs": [
+				{"name":"title","type":"bytes"},
+				{"name":"count","type":"uint32"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "deleteBuyFromList",
+			"inputs": [
+				{"name":"id","type":"uint32"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "buy",
+			"inputs": [
+				{"name":"id","type":"uint32"},
+				{"name":"price","type":"uint32"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getBuyes",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"id","type":"uint32"},{"name":"title","type":"bytes"},{"name":"count","type":"uint32"},{"name":"timestamp","type":"uint32"},{"name":"isBuy","type":"bool"},{"name":"price","type":"uint32"}],"name":"buyes","type":"tuple[]"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	]
+}
