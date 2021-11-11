@@ -27,7 +27,7 @@ abstract contract fillingShoppingList is initDebot {
                 "You have {}/{}/{} (paid/unpaid/total) purchases",
                     m_stat.countPaid,
                     m_stat.countUnpaid,
-                    m_stat.totalCount
+                    m_stat.totalPrice
             ),
             sep,
             [
@@ -104,7 +104,7 @@ abstract contract fillingShoppingList is initDebot {
 
     function deleteBuyFromList(uint32 index) public {
         index = index;
-        if (m_stat.totalCount > 0) {
+        if (m_stat.totalPrice > 0) {
             Terminal.input(tvm.functionId(deleteBuyFromList_), "Enter purchase number:", false);
         } else {
             Terminal.print(0, "Sorry, your shopping list is empty");
@@ -132,7 +132,7 @@ abstract contract fillingShoppingList is initDebot {
         _menu();
     }
 
-    function getSummary(uint32 answerId) public override view {
+    function getSummary(uint32 answerId) public override {
         optional(uint256) none;
         IShopingList(m_address).getSummary{
             abiVer: 2,

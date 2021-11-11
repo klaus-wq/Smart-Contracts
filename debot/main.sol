@@ -28,7 +28,7 @@ struct Buy {
 struct Summary {
     uint32 countPaid;
     uint32 countUnpaid;
-    uint32 totalCount;
+    uint32 totalPrice;
 }
 
 //интерфейс "Список покупок"

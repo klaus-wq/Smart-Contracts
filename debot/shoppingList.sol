@@ -3,9 +3,9 @@ pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
-import 'main.sol';
+import "main.sol";
 
-contract Todo {
+contract shoppingList is IShopingList{
     /*
      * ERROR CODES
      * 102 - purchase not found
@@ -17,7 +17,7 @@ contract Todo {
         _;
     }
 
-    uint32 m_count;
+    uint32 buy_id;
 
     mapping(uint32 => Buy) m_buyes;
 
@@ -31,36 +31,35 @@ contract Todo {
     }
 
     //- список покупок-статистика о покупках
-    function getSummary() public view returns (Summary sum) {
-        uint32 countPaid;
-        uint32 countUnpaid;
+    function getSummary() public override returns (Summary sum) {
 
-        for((, Buy item) : m_buyes) {
-            if  (item.isBuy) {
-                countPaid ++;
+        for((uint32 id, Buy buy1) : m_buyes) {
+            if  (buy1.isBuy) {
+                sum.countPaid ++;
+                sum.totalPrice+=buy1.price;
             } else {
-                countUnpaid ++;
+                sum.countUnpaid ++;
             }
         }
-        sum = Summary( countPaid, countUnpaid, countPaid + countUnpaid);
+        return sum;
     }
 
     //- добавление покупки в список (параметры: название продукта, количество)
-    function addBuyToList(string title, uint32 count) public onlyOwner {
+    function addBuyToList(string title, uint32 count) public override onlyOwner {
         tvm.accept();
-        m_count++;
-        m_buyes[m_count] = Buy(m_count, title, count, now, false, 0);
+        buy_id++;
+        m_buyes[buy_id] = Buy(buy_id, title, count, now, false, 0);
     }
 
     //-- удаление покупки из списка
-    function deleteBuyFromList(uint32 id) public onlyOwner {
-        require(m_buyes.exists(id), 102);
+    function deleteBuyFromList(uint32 id) public override onlyOwner {
+        require(m_buyes.exists(id), 102, "Id did not found");
         tvm.accept();
         delete m_buyes[id];
     }
 
     //- купить [помечает, чты вы купили; купить обратно, то есть сбросить флаг покупки  не надо делать]. параметры: (ID, цена)*/
-    function buy(uint32 id, uint32 price) public onlyOwner {
+    function buy(uint32 id, uint32 price) public override onlyOwner {
         optional(Buy) buy1 = m_buyes.fetch(id);
         require(buy1.hasValue(), 102);
         tvm.accept();
@@ -71,20 +70,20 @@ contract Todo {
     }
 
     //вывести данные о всех покупках
-    function getBuyes() public view returns (Buy[] buyes) {
+    function getBuyes() public override returns (Buy[] buyes) {
         string title;
         uint32 count;
         uint32 timestamp;
-        bool isPurchase;
+        bool isBuy;
         uint32 price;
 
         for((uint32 id, Buy buy1) : m_buyes) {
             title = buy1.title;
             count = buy1.count;
             timestamp = buy1.timestamp;
-            isPurchase = buy1.isBuy;
+            isBuy = buy1.isBuy;
             price = buy1.price;
-            buyes.push(Buy(id, title, count, timestamp, isPurchase, price));
+            buyes.push(Buy(id, title, count, timestamp, isBuy, price));
        }
     }
 }

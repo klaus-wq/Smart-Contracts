@@ -18,7 +18,7 @@ setTodoCode, savePublicKey, checkStatus, creditAccount, waitBeforeDeploy, checkI
 abstract contract initDebot is Debot{
     function _menu() virtual public;
     function setSummary(Summary sum) virtual public;
-    function getSummary(uint32 answerId) virtual public view;
+    function getSummary(uint32 answerId) virtual public;
 
     bytes m_icon;
 
