@@ -18,7 +18,7 @@ setTodoCode, savePublicKey, checkStatus, creditAccount, waitBeforeDeploy, checkI
 abstract contract initDebot is Debot{
     function _menu() virtual public;
     function setSummary(Summary sum) virtual public;
-    function getSummary(uint32 answerId) virtual public;
+    function getSummary(uint32 answerId) virtual public view;
 
     bytes m_icon;
 
@@ -138,5 +138,10 @@ abstract contract initDebot is Debot{
 
     function onSuccess() public view {
         getSummary(tvm.functionId(setSummary));
+    }
+
+    function onError(uint32 sdkError, uint32 exitCode) public {
+        Terminal.print(0, format("Operation failed. sdkError {}, exitCode {}", sdkError, exitCode));
+        _menu();
     }
 }

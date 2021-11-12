@@ -10,12 +10,32 @@ import "initDebot.sol";
 Удаление покупки
 Произвести покупку (от пользователя в том числе затребуется цена, за сколько он купил). То списке пометится флаг купленности и сохранится цена. */
 
-abstract contract walkingInTheShop is initDebot {
+contract walkingInTheShop is initDebot {
 
     uint32 m_buyId;
 
+    function getDebotInfo() public functionID(0xDEB) override view returns(
+        string name, string version, string publisher, string key, string author,
+        address support, string hello, string language, string dabi, bytes icon
+    ) {
+        name = "Shopping DeBot";
+        version = "0.2.0";
+        publisher = "TON Labs";
+        key = "TODO list manager";
+        author = "TON Labs";
+        support = address.makeAddrStd(0, 0x66e01d6df5a8d7677d9ab2daf7f258f1e2a7fe73da5320300395f99e01dc3b5f);
+        hello = "Hello, I can help you make purchases.";
+        language = "en";
+        dabi = m_debotAbi.get();
+        icon = m_icon;
+    }
+
     function start() public override {
         Terminal.input(tvm.functionId(savePublicKey),"Please enter your public key",false);
+    }
+
+    function getRequiredInterfaces() public view override returns (uint256[] interfaces) {
+        return [ Terminal.ID, Menu.ID, AddressInput.ID ];
     }
 
     function _menu() override public {
@@ -25,7 +45,7 @@ abstract contract walkingInTheShop is initDebot {
                 "You have {}/{}/{} (paid/unpaid/total) purchases",
                     m_stat.countPaid,
                     m_stat.countUnpaid,
-                    m_stat.totalCount
+                    m_stat.totalPrice
             ),
             sep,
             [
@@ -73,7 +93,7 @@ abstract contract walkingInTheShop is initDebot {
 
     function deleteBuyFromList(uint32 index) public {
         index = index;
-        if (m_stat.totalCount > 0) {
+        if (m_stat.countPaid + m_stat.countUnpaid > 0) {
             Terminal.input(tvm.functionId(deleteBuyFromList_), "Enter purchase number:", false);
         } else {
             Terminal.print(0, "Sorry, your shopping list is empty");
@@ -98,7 +118,7 @@ abstract contract walkingInTheShop is initDebot {
 
     function buy(uint32 index) public {
         index = index;
-        if (m_stat.totalCount > 0) {
+        if (m_stat.countPaid + m_stat.countUnpaid > 0) {
             Terminal.input(tvm.functionId(buy_), "Input purchase number:", false);
         } else {
             Terminal.print(0, "Sorry, your shopping list is empty");
@@ -115,7 +135,6 @@ abstract contract walkingInTheShop is initDebot {
     function buy__(string value) public view {
         optional(uint256) pubkey = 0;
         (uint256 num,) = stoi(value);
-        uint32 price = uint32(num);
         IShopingList(m_address).buy{
                 abiVer: 2,
                 extMsg: true,
@@ -125,7 +144,7 @@ abstract contract walkingInTheShop is initDebot {
                 expire: 0,
                 callbackId: tvm.functionId(onSuccess),
                 onErrorId: tvm.functionId(onError)
-            }(m_buyId, price);
+            }(m_buyId, uint32(num));
     }
 
 
