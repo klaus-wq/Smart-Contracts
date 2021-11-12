@@ -14,8 +14,6 @@ import "initDebot.sol";
 contract fillingShoppingList is initDebot {
 
     string title1;
-    uint32 count1;
-
     
     function getDebotInfo() public functionID(0xDEB) override view returns(
         string name, string version, string publisher, string key, string author,
@@ -24,10 +22,10 @@ contract fillingShoppingList is initDebot {
         name = "Shopping list DeBot";
         version = "0.2.0";
         publisher = "TON Labs";
-        key = "TODO list manager";
+        key = "Shopping list manager";
         author = "TON Labs";
         support = address.makeAddrStd(0, 0x66e01d6df5a8d7677d9ab2daf7f258f1e2a7fe73da5320300395f99e01dc3b5f);
-        hello = "Hello, I can help you to create a shopping list.";
+        hello = "Hi, I am a Shopping list Debot.";
         language = "en";
         dabi = m_debotAbi.get();
         icon = m_icon;
@@ -59,19 +57,19 @@ contract fillingShoppingList is initDebot {
         );
     }
     
-    function addBuyToList(string title) public {
-        title1 = title;
+    function addBuyToList(uint32 index) public {
+        index = index;
         Terminal.input(tvm.functionId(addBuyToList_), "Input title of the product:", false);
     }
 
-    function addBuyToList_(uint32 count) public  {
-        count1 = count;
-        Terminal.input(tvm.functionId(addBuyToList__), "Input count you want to buy:", false);
+    function addBuyToList_(string value) public {
+        title1 = value;
+        Terminal.input(tvm.functionId(addBuyToList__), "Input count:", false);
     }
 
     function addBuyToList__(string value) public view {
         optional(uint256) pubkey = 0;
-        (uint256 num,) = stoi(value);
+        (uint256 count1,) = stoi(value);
         IShopingList(m_address).addBuyToList{
                 abiVer: 2,
                 extMsg: true,
@@ -81,7 +79,7 @@ contract fillingShoppingList is initDebot {
                 expire: 0,
                 callbackId: tvm.functionId(onSuccess),
                 onErrorId: tvm.functionId(onError)
-            }(title1, uint32(num));
+            }(title1, uint32(count1));
     }
 
     
@@ -123,9 +121,9 @@ contract fillingShoppingList is initDebot {
     function deleteBuyFromList(uint32 index) public {
         index = index;
         if (m_stat.countPaid + m_stat.countUnpaid> 0) {
-            Terminal.input(tvm.functionId(deleteBuyFromList_), "Enter purchase number:", false);
+            Terminal.input(tvm.functionId(deleteBuyFromList_), "Input purchase number:", false);
         } else {
-            Terminal.print(0, "Sorry, your shopping list is empty");
+            Terminal.print(0, "Your shopping list is empty");
             _menu();
         }
     }

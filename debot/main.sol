@@ -33,7 +33,7 @@ struct Summary {
 
 //интерфейс "Список покупок"
 interface IShopingList {   
-    function getSummary() external returns (Summary);
+    function getSummary() external returns (Summary sum);
     function addBuyToList(string title, uint32 count) external;
     function deleteBuyFromList(uint32 id) external;
     function buy(uint32 id, uint32 price) external;

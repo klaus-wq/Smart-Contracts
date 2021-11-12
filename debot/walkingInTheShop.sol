@@ -21,10 +21,10 @@ contract walkingInTheShop is initDebot {
         name = "Shopping DeBot";
         version = "0.2.0";
         publisher = "TON Labs";
-        key = "TODO list manager";
+        key = "Shopping list manager";
         author = "TON Labs";
         support = address.makeAddrStd(0, 0x66e01d6df5a8d7677d9ab2daf7f258f1e2a7fe73da5320300395f99e01dc3b5f);
-        hello = "Hello, I can help you make purchases.";
+        hello = "Hi, I am a Shopping list Debot.";
         language = "en";
         dabi = m_debotAbi.get();
         icon = m_icon;
@@ -94,7 +94,7 @@ contract walkingInTheShop is initDebot {
     function deleteBuyFromList(uint32 index) public {
         index = index;
         if (m_stat.countPaid + m_stat.countUnpaid > 0) {
-            Terminal.input(tvm.functionId(deleteBuyFromList_), "Enter purchase number:", false);
+            Terminal.input(tvm.functionId(deleteBuyFromList_), "Input purchase number:", false);
         } else {
             Terminal.print(0, "Sorry, your shopping list is empty");
             _menu();
@@ -121,7 +121,7 @@ contract walkingInTheShop is initDebot {
         if (m_stat.countPaid + m_stat.countUnpaid > 0) {
             Terminal.input(tvm.functionId(buy_), "Input purchase number:", false);
         } else {
-            Terminal.print(0, "Sorry, your shopping list is empty");
+            Terminal.print(0, "Your shopping list is empty");
             _menu();
         }
     }

@@ -13,7 +13,7 @@ contract shoppingList is IShopingList{
 
     //- контроль за правами доступа (onlyOwner)
     modifier onlyOwner() {
-        require(msg.pubkey() == m_ownerPubkey, 101);
+        require(msg.pubkey() == m_ownerPubkey, 101, "onlyOwner()");
         _;
     }
 

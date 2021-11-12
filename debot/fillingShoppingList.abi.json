@@ -45,7 +45,7 @@
 		{
 			"name": "addBuyToList",
 			"inputs": [
-				{"name":"title","type":"bytes"}
+				{"name":"index","type":"uint32"}
 			],
 			"outputs": [
 			]
@@ -53,7 +53,7 @@
 		{
 			"name": "addBuyToList_",
 			"inputs": [
-				{"name":"count","type":"uint32"}
+				{"name":"value","type":"bytes"}
 			],
 			"outputs": [
 			]
